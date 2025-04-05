@@ -14,9 +14,9 @@ string_size = "100/1"
 abc_string = "X: 1 \nM: {} \nK: C \ns: !pp! ** !f! \nA/4 ||| A2 A/2 A/ **C !fff! A A2 A3 A4 A6 A7 A8 A12 ".format(string_size)
 #C D E G | G x X A z3 B Z c | "?"A [K:F] Z "?"X B | [K:A] A/4 A/2 A/ A A2 A3 A4 A6 A7 A8 A12 |
 
-us = environment.UserSettings()
-us['lilypondPath'] = '/home/vscode/.local/lib/python3.11/site-packages/lilypond-binaries/bin/lilypond'
-print(us['lilypondPath'])
+#us = environment.UserSettings()
+#us['lilypondPath'] = '/home/vscode/.local/lib/python3.11/site-packages/lilypond-binaries/bin/lilypond'
+#print(us['lilypondPath'])
 
 # Parse the ABC notation
 abc_score = converter.parse(abc_string, format='abc')
