@@ -1,0 +1,47 @@
+\version "2.25" 
+\include "lilypond-book-preamble.ly"
+    
+color = #(define-music-function (parser location color) (string?) #{
+        \once \override NoteHead #'color = #(x11-color color)
+        \once \override Stem #'color = #(x11-color color)
+        \once \override Rest #'color = #(x11-color color)
+        \once \override Beam #'color = #(x11-color color)
+     #})
+    
+\header { 
+ 
+  } 
+ 
+\score  { 
+ 
+      << \new Staff  = xyacydzaxfczady { \clef "treble" 
+             \key c \major 
+             \time 100/1
+             a' 32  
+             a' 4  
+             a' 16  
+             a' 16  
+             c' 8  
+             a' 8  
+             a' 4  
+             a' 4.  
+             a' 2  
+             a' 2.  
+             a' 2..  
+             a' 1  
+             a' 1.  
+              } 
+            
+ 
+        >>
+      
+  } 
+ 
+\paper { }
+\layout {
+  \context {
+    \RemoveEmptyStaffContext
+    \override VerticalAxisGroup #'remove-first = ##t
+  }
+ }
+ 
