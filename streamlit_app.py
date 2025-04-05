@@ -9,9 +9,9 @@ def get_size():
     return random_value
 
 string_size = get_size()
-string_size = "100/1"
+#string_size = "100/1"
 # ABC notation string
-abc_string = "X: 1 \nM: {} \nK: C \ns: !pp! ** !f! \nA/4 ||| A2 A/2 A/ **C !fff! A A2 A3 A4 A6 A7 A8 A12 ".format(string_size)
+abc_string = "X: 1 \nM: {} \nK: C \nA/4 ||| A2 A/2 A C A A2 A3 A4 A6 A7 A8 A12 ".format(string_size)
 #C D E G | G x X A z3 B Z c | "?"A [K:F] Z "?"X B | [K:A] A/4 A/2 A/ A A2 A3 A4 A6 A7 A8 A12 |
 
 #us = environment.UserSettings()

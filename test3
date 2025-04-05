@@ -14,22 +14,22 @@ color = #(define-music-function (parser location color) (string?) #{
  
 \score  { 
  
-      << \new Staff  = xyacydzzdxwxwwe { \clef "treble" 
+      << \new Staff  = xzycfbfxcybzddc { \clef "treble" 
              \key c \major 
-             \time 100/1
-             a' 32  
-             a' 4  
-             a' 16  
-             a' 16  
-             c' 8  
+             \time 5/8
+             a' 64  
              a' 8  
+             a' 32  
+             a' 16  
+             c' 16  
+             a' 16  
+             a' 8  
+             a' 8.  
              a' 4  
              a' 4.  
+             a' 4..  
              a' 2  
              a' 2.  
-             a' 2..  
-             a' 1  
-             a' 1.  
               } 
             
  
