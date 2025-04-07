@@ -4,6 +4,9 @@ from pathlib import Path
 import random
 import base64
 
+if 'result_notes' not in st.session_state:
+    st.session_state['result_notes'] = ''
+
 def get_size():
     string_array = ["2/2", "2/4", "3/4", "3/8", "4/4", "6/8", "5/4", "5/8", "7/4", "7/8", "4/1", "4/8", "6/4", "9/8", "12/8"]
     random_value = random.choice(string_array)
@@ -20,56 +23,44 @@ def add_invite_header(string_size):
 
 add_invite_header(string_size)
 
-def img_to_bytes(img_path):
-    img_bytes = Path(img_path).read_bytes()
-    encoded_img = base64.b64encode(img_bytes).decode()
-    return encoded_img
-
-whole_note64 = img_to_bytes("notes/note_whole.jpg")
-html = f"<a href='#'><img src='data:image/png;base64,{whole_note64}'></a>"
-st.markdown(html, unsafe_allow_html=True)
-
-left, middle, right = st.columns(3)
-if left.button("![ц]({html}) Целая нота", use_container_width=True):
-    left.markdown("You clicked the plain button.")
-#https://www.dropbox.com/scl/fi/d34b12gp4jkl73b66k3lj/note_half_dot.jpg?rlkey=k4yg3sl5saij3gkyuqeyegxz4&dl=1
-if middle.button("![пт](https://thumb.cloud.mail.ru/weblink/thumb/xw1/26NU/2DAwX4sb7) Половина с точкой", use_container_width=True):
-    middle.markdown("You clicked the emoji button.")
-if right.button("Material button", icon=":material/mood:", use_container_width=True):
-    right.markdown("You clicked the Material button.")
-
-container = st.container(border=True)
-imageWhole, buttonWhole, imageHalf, buttonHalf = container.columns(4)
-imageWhole.image("notes/note_whole.jpg", caption="", width = 3, use_column_width=False)
-imageHalf.image("notes/note_half.jpg", caption="")
-if buttonWhole.button("Целая нота", use_container_width=True):
-    buttonWhole.markdown("You clicked the Целую нота")
-if buttonHalf.button("Половинная нота", use_container_width=True):
-    buttonHalf.markdown("You clicked the Половинная нота")
-
-button_names = ["Целая нота", "Половинная нота"]
-for button_name in button_names:
-    col1, col2 = st.columns(2, vertical_alignment='center')
-    col1.image("notes/note_whole.jpg", width=40)
-    if col2.button("Целая нота"):
-        col2.markdown("You clicked the Целую нота")
-
-string_size = "100/1"
-# ABC notation string
-abc_string = "X: 1 \nM: {} \nK: C \n z/4".format(string_size)
-#C D E G | G x X A z3 B Z c | "?"A [K:F] Z "?"X B | [K:A] A/4 A/2 A/ A A2 A3 A4 A6 A7 A8 A12 |
+def createImage(notes):
+    string_size = "100/1"
+    abc_string = "X: 1 \nM: {} \nK: C \n {}".format(string_size, notes)
+    abc_score = converter.parse(abc_string, format='abc')
+    #C D E G | G x X A z3 B Z c | "?"A [K:F] Z "?"X B | [K:A] A/4 A/2 A/ A A2 A3 A4 A6 A7 A8 A12 |
 #A/4 A2 A/2 A C A A2 A3 A4 A6 A7 A8 A12
+    output_path = Path('test3')
+    abc_score.write(fmt="lily.png", fp=output_path)
+    st.image("test3.png", caption="Notes")
+def calculateImageNote(newNote, existingNote):
+    res_note = "{} {}".format(existingNote, newNote)
+    return res_note
 
-#us = environment.UserSettings()
-#us['lilypondPath'] = '/home/vscode/.local/lib/python3.11/site-packages/lilypond-binaries/bin/lilypond'
-#print(us['lilypondPath'])
+result_note = st.session_state['result_notes']
 
-# Parse the ABC notation
-abc_score = converter.parse(abc_string, format='abc')
-# Create a graph of the score
-#thePlot = abc_score.plot('pianoroll', doneAction=None)
+whole_note, half_dot_note, half_note, quater_dot_note, quater_note = st.columns(5)
+if whole_note.button("![целая](https://thumb.cloud.mail.ru/weblink/thumb/xw1/PRpN/qbDRrxUn1) Целая нота", use_container_width=True):
+    result_note = calculateImageNote("A12", result_note)
+if half_dot_note.button("![половинная с точкой](https://thumb.cloud.mail.ru/weblink/thumb/xw1/VHpZ/peYuCrJBL) Половинная с точкой", use_container_width=True):
+    result_note = calculateImageNote("A6", result_note)
+if half_note.button("![половинная](https://thumb.cloud.mail.ru/weblink/thumb/xw1/Bip2/Huc2EyWqy) Половинная нота", use_container_width=True):
+    result_note = calculateImageNote("A4", result_note)
+if quater_dot_note.button("![четвертная с точкой](https://thumb.cloud.mail.ru/weblink/thumb/xw1/2Vcw/87xB2s8ou) Четвертная с точкой", use_container_width=True):
+    result_note = calculateImageNote("A3", result_note)
+if quater_note.button("![четвертная](https://thumb.cloud.mail.ru/weblink/thumb/xw1/hKUn/7BLwP4WaG) Четвертная нота", use_container_width=True):
+    result_note = calculateImageNote("A2", result_note)
 
-output_path = Path('test3')
-abc_score.write(fmt="lily.png", fp=output_path)
+note8, note16, note32, note64, pause_whole = st.columns(5)
+if note8.button("![восьмая](https://thumb.cloud.mail.ru/weblink/thumb/xw1/e3pf/Z9LbiG3d6) Восьмая нота", use_container_width=True):
+    result_note = calculateImageNote("A", result_note)
+if note16.button("![шестнадцатая](https://thumb.cloud.mail.ru/weblink/thumb/xw1/r2QW/ZZeJM1k3v) Шестнадцатая нота", use_container_width=True):
+    result_note = calculateImageNote("A/2", result_note)
+if note32.button("![32](https://thumb.cloud.mail.ru/weblink/thumb/xw1/xc7o/GetDZokC8) Тридцать вторая", use_container_width=True):
+    result_note = calculateImageNote("A/4", result_note)
+if note64.button("![64](https://thumb.cloud.mail.ru/weblink/thumb/xw1/rW8E/Ce5ZBCSpd) Шестьдесят четвёртая", use_container_width=True):
+    result_note = calculateImageNote("A/8", result_note)
+if pause_whole.button("![целая пауза](https://thumb.cloud.mail.ru/weblink/thumb/xw1/f2WC/btg7mn7Y2) Целая пауза", use_container_width=True):
+    result_note = calculateImageNote("z8", result_note)
 
-st.image("test3.png", caption="Sunrise by the mountains")
+st.session_state['result_notes'] = result_note
+createImage(result_note)
