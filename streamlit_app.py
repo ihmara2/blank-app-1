@@ -32,6 +32,7 @@ st.markdown(html, unsafe_allow_html=True)
 left, middle, right = st.columns(3)
 if left.button("![ц]({html}) Целая нота", use_container_width=True):
     left.markdown("You clicked the plain button.")
+#https://www.dropbox.com/scl/fi/d34b12gp4jkl73b66k3lj/note_half_dot.jpg?rlkey=k4yg3sl5saij3gkyuqeyegxz4&dl=1
 if middle.button("![пт](https://thumb.cloud.mail.ru/weblink/thumb/xw1/26NU/2DAwX4sb7) Половина с точкой", use_container_width=True):
     middle.markdown("You clicked the emoji button.")
 if right.button("Material button", icon=":material/mood:", use_container_width=True):
